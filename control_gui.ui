@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1279</width>
-    <height>691</height>
+    <width>1283</width>
+    <height>700</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -125,7 +125,7 @@ color:rgb(255, 255, 255)</string>
       <rect>
        <x>10</x>
        <y>50</y>
-       <width>191</width>
+       <width>204</width>
        <height>31</height>
       </rect>
      </property>
@@ -493,6 +493,19 @@ color:rgb(255, 255, 255)</string>
       <string>Camera ON</string>
      </property>
     </widget>
+    <widget class="QTextBrowser" name="highstate_textBrowser">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>360</y>
+       <width>291</width>
+       <height>221</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QTextEdit" name="textEdit">
     <property name="geometry">
@@ -534,8 +547,26 @@ p, li { white-space: pre-wrap; }
       <height>371</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>에스코어 드림 7 ExtraBold</family>
+      <pointsize>20</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(195, 192, 197);
+color: rgb(255, 255, 255);</string>
+    </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>Camer View</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
    <zorder>frame_2</zorder>
@@ -549,8 +580,8 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1279</width>
-     <height>26</height>
+     <width>1283</width>
+     <height>21</height>
     </rect>
    </property>
   </widget>

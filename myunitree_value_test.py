@@ -2,7 +2,7 @@ import sys
 import time
 from ucl.common import byte_print, decode_version, decode_sn, getVoltage, pretty_print_obj, lib_version
 from ucl.highCmd import highCmd
-from ucl.highState import highState
+from ucl.highState_b1 import highState
 from ucl.unitreeConnection import unitreeConnection, HIGH_WIFI_DEFAULTS, HIGH_WIRED_DEFAULTS
 from ucl.enums import MotorModeHigh, GaitType
 from ucl.complex import motorCmd
@@ -26,6 +26,7 @@ class myunitree:
         data = self.conn.getData()
         for paket in data:
             self.hstate.parseData(paket)
+
 
     def sendCmd(self):
         self.cmd_bytes = self.hcmd.buildCmd(debug=False)

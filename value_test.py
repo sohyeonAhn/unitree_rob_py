@@ -5,7 +5,6 @@ from PyQt5.QtWidgets import *
 from PyQt5 import uic
 from PyQt5.QtCore import *
 from myunitree_value_test import myunitree
-
 from PyQt5.QtGui import *
 
 class Tread1(QThread):
@@ -17,6 +16,26 @@ class Tread1(QThread):
         while True:
             time.sleep(0.2)
             self.parent.sendCmd()
+
+class CameraThread(QThread):
+    update_image = pyqtSignal(QImage)
+
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.parent = parent
+        self.camera = cv2.VideoCapture(0)
+        # self.camera = cv2.VideoCapture('rtsp://192.168.10.223:554/live.sdp')
+
+    def run(self):
+        while True:
+            ret, frame = self.camera.read()
+            if ret:
+                rgb_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                h, w, ch = rgb_image.shape
+                bytes_per_line = ch * w
+                q_image = QImage(rgb_image.data, w, h, bytes_per_line, QImage.Format_RGB888)
+                self.update_image.emit(q_image)
+
 
 class MyWindow(QMainWindow):
     def __init__(self):
@@ -81,12 +100,22 @@ class MyWindow(QMainWindow):
         h1 = Tread1(self)
         h1.start()
 
-    # 카메라 Qpixmap view
+    # 카메라 Qpixmap view image
+    # def camera_on(self):
+    #     # 이미지 테스트
+    #     qPixmap =QPixmap()
+    #     qPixmap.load("pixmap_image_sample.png")
+    #     self.camera_view.setPixmap(qPixmap)
+
     def camera_on(self):
-        # 이미지 테스트
-        qPixmap =QPixmap()
-        qPixmap.load("pixmap_image_sample.png")
-        self.camera_view.setPixmap(qPixmap)
+
+        self.camera_thread = CameraThread(self)
+        self.camera_thread.update_image.connect(self.update_camera_view)
+        self.camera_thread.start()
+
+    @pyqtSlot(QImage)
+    def update_camera_view(self, image):
+        self.camera_view.setPixmap(QPixmap.fromImage(image))
 
 
 

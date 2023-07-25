@@ -1,10 +1,8 @@
 from ucl.common import byte_print, decode_version, decode_sn, getVoltage, pretty_print_obj, lib_version
 from ucl.highCmd import highCmd
-from ucl.highState import highState
-from ucl.lowCmd import lowCmd
+from ucl.highState_b1 import highState
 from ucl.unitreeConnection import unitreeConnection, HIGH_WIFI_DEFAULTS, HIGH_WIRED_DEFAULTS
 from ucl.enums import MotorModeHigh, GaitType
-from ucl.complex import motorCmd
 import time
 
 # You can use one of the 3 Presets WIFI_DEFAULTS, LOW_CMD_DEFAULTS or HIGH_CMD_DEFAULTS.
