@@ -3,18 +3,17 @@ import time
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
 from PyQt5.QtCore import *
-from myunitree import myunitree
+from myunitree_value_test import myunitree
 
-# 스레드
 class Tread1(QThread):
     def __init__(self,parent):
         super().__init__(parent)
         self.parent = parent
 
-    def run(self): # 스레드가 시작되면 실행
+    def run(self):
         while True:
-            time.sleep(0.2) # 0.2초 대기 후 실행
-            self.parent.sendCmd() # 부모(MyWindow)의 sendCmd 호출
+            time.sleep(0.2)
+            self.parent.sendCmd()
 
 class MyWindow(QMainWindow):
     def __init__(self):
@@ -28,39 +27,60 @@ class MyWindow(QMainWindow):
         self.W_btn.clicked.connect(self.click_W)
         self.E_btn.clicked.connect(self.click_E)
         self.Stop_btn.clicked.connect(self.click_Stop)
+        self.L_btn.clicked.connect(self.click_L)
+        self.R_btn.clicked.connect(self.click_R)
 
-        self.Act_1_btn.clicked.connect(self.udp_connect)
-        self.Act_2_btn.clicked.connect(self.click_act2)
+        self.connect_btn.clicked.connect(self.udp_connect)
 
+        self.input_vel_0.valueChanged.connect(self.vel_0_value_changed)
+        self.input_vel_1.valueChanged.connect(self.vel_1_value_changed)
+        self.input_yawspeed.valueChanged.connect(self.yawspeed_value_changed)
+
+
+    def sendCmd(self):
+        self.isungb1.sendCmd()
+
+
+    def vel_0_value_changed(self, value):
+        self.vel_0_N = value
+        self.vel_0_S = -value
+        # print("입력된 vel_0:", self.vel_0)
+    def vel_1_value_changed(self, value):
+        self.vel_1_W = value
+        self.vel_1_E = -value
+        # print("입력된 vel_1:", self.vel_1)
+    def yawspeed_value_changed(self, value):
+        self.yawspeed_value_L = value
+        self.yawspeed_value_R = -value
+        # print("입력된 yawspeed:", self.yawspeed_value)
 
     def click_N(self):
-        self.isungb1.click_N()
+        self.isungb1.click_N(self.vel_0_N)
     def click_S(self):
-        self.isungb1.click_S()
+        self.isungb1.click_S(self.vel_0_S)
     def click_W(self):
-        self.isungb1.click_W()
+        self.isungb1.click_W(self.vel_1_W)
     def click_E(self):
-        self.isungb1.click_E()
+        self.isungb1.click_E(self.vel_1_E)
     def click_Stop(self):
         self.isungb1.click_Stop()
+    def click_L(self):
+        self.isungb1.click_L(self.yawspeed_value_L)
+        print("입력된 yawspeed_L:", self.yawspeed_value_L)
+    def click_R(self):
+        self.isungb1.click_R(self.yawspeed_value_R)
+        print("입력된 yawspeed_R:", self.yawspeed_value_R)
 
-    # udp 통신
     def udp_connect(self):
         self.isungb1.connect()
         h1 = Tread1(self)
         h1.start()
 
-    # 모드 6 테스트
-    def click_act2(self):
-        self.isungb1.mode6()
 
-    # myunitree 인스턴스를 통해 명령을 보내는 함수
-    def sendCmd(self):
-        self.isungb1.sendCmd()
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = MyWindow()
     window.show()
     app.exec_()
-

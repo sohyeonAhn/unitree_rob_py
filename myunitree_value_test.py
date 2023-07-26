@@ -22,16 +22,41 @@ class myunitree:
         self.hstate = highState()
 
     def cmdInit(self):
-        time.sleep(0.5)  # Some time to collect pakets ;)
+        time.sleep(0.5)
         data = self.conn.getData()
         for paket in data:
             self.hstate.parseData(paket)
 
+            self.highstate_info = f"SN [{byte_print(self.hstate.SN)}]:\t{decode_sn(self.hstate.SN)}\n" \
+                             f"Ver [{byte_print(self.hstate.version)}]:\t{decode_version(self.hstate.version)}\n" \
+                             f"SOC:\t\t\t{self.hstate.bms.SOC} %\n" \
+                             f"Overall Voltage:\t{getVoltage(self.hstate.bms.cell_vol)} mv\n" \
+                             f"Current:\t\t{self.hstate.bms.current} mA\n" \
+                             f"Cycles:\t\t\t{self.hstate.bms.cycle}\n" \
+                             f"Temps BQ:\t\t{self.hstate.bms.BQ_NTC[0]} °C, {self.hstate.bms.BQ_NTC[1]}°C\n" \
+                             f"Temps MCU:\t\t{self.hstate.bms.MCU_NTC[0]} °C, {self.hstate.bms.MCU_NTC[1]}°C\n" \
+                             f"FootForce:\t\t{self.hstate.footForce}\n" \
+                             f"FootForceEst:\t\t{self.hstate.footForceEst}\n"
+
+            # print('+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=')
+            # print(f'SN [{byte_print(self.hstate.SN)}]:\t{decode_sn(self.hstate.SN)}')
+            # print(f'Ver [{byte_print(self.hstate.version)}]:\t{decode_version(self.hstate.version)}')
+            # print(f'SOC:\t\t\t{self.hstate.bms.SOC} %')
+            # print(f'Overall Voltage:\t{getVoltage(self.hstate.bms.cell_vol)} mv')  # something is still wrong here ?!
+            # print(f'Current:\t\t{self.hstate.bms.current} mA')
+            # print(f'Cycles:\t\t\t{self.hstate.bms.cycle}')
+            # print(f'Temps BQ:\t\t{self.hstate.bms.BQ_NTC[0]} °C, {self.hstate.bms.BQ_NTC[1]}°C')
+            # print(f'Temps MCU:\t\t{self.hstate.bms.MCU_NTC[0]} °C, {self.hstate.bms.MCU_NTC[1]}°C')
+            # print(f'FootForce:\t\t{self.hstate.footForce}')
+            # print(f'FootForceEst:\t\t{self.hstate.footForceEst}')
+            # print('+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=')
 
     def sendCmd(self):
         self.cmd_bytes = self.hcmd.buildCmd(debug=False)
         self.conn.send(self.cmd_bytes)
         print(self.hcmd.mode)
+
+        self.cmdInit()
 
     def click_N(self,vel_0):
         self.cmdInit()
