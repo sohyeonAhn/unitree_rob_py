@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1279</width>
-    <height>691</height>
+    <width>1275</width>
+    <height>602</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -54,7 +54,7 @@ color:rgb(255, 255, 255)</string>
       <x>10</x>
       <y>50</y>
       <width>211</width>
-      <height>591</height>
+      <height>171</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -125,7 +125,7 @@ color:rgb(255, 255, 255)</string>
       <rect>
        <x>10</x>
        <y>50</y>
-       <width>204</width>
+       <width>191</width>
        <height>31</height>
       </rect>
      </property>
@@ -280,7 +280,7 @@ color:rgb(255, 255, 255)</string>
       <x>960</x>
       <y>50</y>
       <width>311</width>
-      <height>591</height>
+      <height>521</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -469,6 +469,37 @@ color:rgb(255, 255, 255);</string>
       <string>E</string>
      </property>
     </widget>
+    <widget class="QLabel" name="camera_view">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>350</y>
+       <width>281</width>
+       <height>151</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>에스코어 드림 7 ExtraBold</family>
+       <pointsize>20</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(195, 192, 197);
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Camer View</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
     <widget class="QPushButton" name="camera_on_btn">
      <property name="geometry">
       <rect>
@@ -492,6 +523,51 @@ color:rgb(255, 255, 255)</string>
      </property>
      <property name="text">
       <string>Camera ON</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="SOC_label">
+     <property name="geometry">
+      <rect>
+       <x>250</x>
+       <y>10</y>
+       <width>51</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>에스코어 드림 6 Bold</family>
+       <pointsize>10</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>100%</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>10</y>
+       <width>61</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>에스코어 드림 6 Bold</family>
+       <pointsize>10</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>배터리 :</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </widget>
@@ -526,44 +602,23 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;192.168.123.220&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QLabel" name="camera_view">
+   <widget class="PlotWidget" name="graph_chart" native="true">
     <property name="geometry">
      <rect>
       <x>250</x>
       <y>50</y>
       <width>681</width>
-      <height>371</height>
+      <height>191</height>
      </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>에스코어 드림 7 ExtraBold</family>
-      <pointsize>20</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="layoutDirection">
-     <enum>Qt::LeftToRight</enum>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(195, 192, 197);
-color: rgb(255, 255, 255);</string>
-    </property>
-    <property name="text">
-     <string>Camer View</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
     </property>
    </widget>
    <widget class="QTextBrowser" name="highstate_textBrowser">
     <property name="geometry">
      <rect>
-      <x>250</x>
-      <y>430</y>
-      <width>681</width>
-      <height>211</height>
+      <x>10</x>
+      <y>240</y>
+      <width>211</width>
+      <height>341</height>
      </rect>
     </property>
     <property name="font">
@@ -576,25 +631,44 @@ color: rgb(255, 255, 255);</string>
 color: rgb(0, 0, 255);</string>
     </property>
    </widget>
+   <widget class="PlotWidget" name="footforce_graph" native="true">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>240</y>
+      <width>681</width>
+      <height>321</height>
+     </rect>
+    </property>
+   </widget>
    <zorder>frame_2</zorder>
    <zorder>connect_btn</zorder>
    <zorder>frame</zorder>
    <zorder>textEdit</zorder>
-   <zorder>camera_view</zorder>
+   <zorder>graph_chart</zorder>
    <zorder>highstate_textBrowser</zorder>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1279</width>
-     <height>26</height>
-    </rect>
-   </property>
+   <zorder>footforce_graph</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actiontest">
+   <property name="text">
+    <string>test</string>
+   </property>
+  </action>
+  <action name="actionGraph">
+   <property name="text">
+    <string>Graph</string>
+   </property>
+  </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PlotWidget</class>
+   <extends>QWidget</extends>
+   <header>pyqtgraph</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
