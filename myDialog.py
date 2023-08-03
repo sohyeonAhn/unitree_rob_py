@@ -1,6 +1,4 @@
-import sys
 import time
-import traceback
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
 from PyQt5.QtCore import *
@@ -11,12 +9,15 @@ class myDialog(QDialog):
     def __init__(self,parent):
         super().__init__()
         # super().__init__(parent) # parent 입력하면 modal
-
         uic.loadUi(r'./graph_gui.ui', self)
-
         self.parent = parent # 상위 윈도우의 데이터를 접근
         # print(self.parent.test)
-        self.dialog_data_footforce = self.parent.plot_data_footforce
+
+        self.time_data = []
+        self.body_height_data = []
+
+        self.plot_widget = self.findChild(pg.PlotWidget, "graph_chart")
+        self.plot_curve = self.plot_widget.plot(pen="b")
 
         self.plot_widget = self.findChild(pg.PlotWidget, "footforce_graph")
 
@@ -24,6 +25,20 @@ class myDialog(QDialog):
         self.plot_timer.timeout.connect(self.update_plot)
         self.plot_timer.start(200)
 
+    def graph_bodyHeight(self):
+        # Add new data to the plot
+        if self.dialog_data_bodyHeight:
+            current_time = time.time()
+            self.time_data.append(current_time)
+            self.body_height_data.append(self.dialog_data_bodyHeight)
+            # Remove old data to keep the plot window fixed (adjust the range as needed)
+        max_time_window = 10  # Display the last 10 seconds of data
+        while self.time_data[-1] - self.time_data[0] > max_time_window:
+            self.time_data.pop(0)
+            self.body_height_data.pop(0)
+
+        # Update the plot
+        self.plot_curve.setData(x=np.array(self.time_data) - self.time_data[0], y=self.body_height_data)
 
     def graph_footforce(self):
         if self.dialog_data_footforce:
@@ -54,5 +69,9 @@ class myDialog(QDialog):
                 self.plot_widget.addItem(label)
 
     def update_plot(self):
-        # self.graph_bodyHeight()
+
+        self.dialog_data_footforce = self.parent.plot_data_footforce
+        self.dialog_data_bodyHeight = self.parent.plot_data_bodyHeight
+
+        self.graph_bodyHeight()
         self.graph_footforce()

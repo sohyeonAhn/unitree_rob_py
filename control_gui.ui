@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1275</width>
-    <height>602</height>
+    <width>1279</width>
+    <height>611</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -125,7 +125,7 @@ color:rgb(255, 255, 255)</string>
       <rect>
        <x>10</x>
        <y>50</y>
-       <width>191</width>
+       <width>204</width>
        <height>31</height>
       </rect>
      </property>
@@ -602,16 +602,6 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;192.168.123.220&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="PlotWidget" name="graph_chart" native="true">
-    <property name="geometry">
-     <rect>
-      <x>250</x>
-      <y>50</y>
-      <width>681</width>
-      <height>191</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QTextBrowser" name="highstate_textBrowser">
     <property name="geometry">
      <rect>
@@ -631,23 +621,11 @@ p, li { white-space: pre-wrap; }
 color: rgb(0, 0, 255);</string>
     </property>
    </widget>
-   <widget class="PlotWidget" name="footforce_graph" native="true">
-    <property name="geometry">
-     <rect>
-      <x>250</x>
-      <y>240</y>
-      <width>681</width>
-      <height>321</height>
-     </rect>
-    </property>
-   </widget>
    <zorder>frame_2</zorder>
    <zorder>connect_btn</zorder>
    <zorder>frame</zorder>
    <zorder>textEdit</zorder>
-   <zorder>graph_chart</zorder>
    <zorder>highstate_textBrowser</zorder>
-   <zorder>footforce_graph</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actiontest">
@@ -661,14 +639,6 @@ color: rgb(0, 0, 255);</string>
    </property>
   </action>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>PlotWidget</class>
-   <extends>QWidget</extends>
-   <header>pyqtgraph</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>
