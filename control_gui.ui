@@ -441,70 +441,13 @@ color: rgb(255, 255, 255);</string>
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="horizontalLayoutWidget_7">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>330</y>
-       <width>201</width>
-       <height>61</height>
-      </rect>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_8">
-      <item>
-       <widget class="QLabel" name="label_8">
-        <property name="font">
-         <font>
-          <family>에스코어 드림 6 Bold</family>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(0, 0, 127);
-color: rgb(255, 255, 255);</string>
-        </property>
-        <property name="text">
-         <string>Trot</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QDoubleSpinBox" name="input_trot">
-        <property name="font">
-         <font>
-          <family>에스코어 드림 6 Bold</family>
-          <pointsize>9</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-        <property name="minimum">
-         <double>-1.000000000000000</double>
-        </property>
-        <property name="maximum">
-         <double>1.000000000000000</double>
-        </property>
-        <property name="singleStep">
-         <double>0.100000000000000</double>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
     <widget class="QWidget" name="verticalLayoutWidget">
      <property name="geometry">
       <rect>
-       <x>60</x>
-       <y>400</y>
-       <width>111</width>
-       <height>113</height>
+       <x>40</x>
+       <y>340</y>
+       <width>151</width>
+       <height>101</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -541,24 +484,6 @@ color: rgb(255, 255, 255);</string>
         </property>
         <property name="text">
          <string>H_Test</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="trot_btn">
-        <property name="font">
-         <font>
-          <family>에스코어 드림 6 Bold</family>
-          <pointsize>10</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
-        </property>
-        <property name="text">
-         <string>T_Test</string>
         </property>
        </widget>
       </item>
@@ -760,51 +685,6 @@ color:rgb(255, 255, 255);</string>
       <string>E</string>
      </property>
     </widget>
-    <widget class="QLabel" name="SOC_label">
-     <property name="geometry">
-      <rect>
-       <x>250</x>
-       <y>10</y>
-       <width>51</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>에스코어 드림 6 Bold</family>
-       <pointsize>11</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>100%</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label">
-     <property name="geometry">
-      <rect>
-       <x>190</x>
-       <y>10</y>
-       <width>61</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>에스코어 드림 6 Bold</family>
-       <pointsize>11</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>배터리 :</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
     <widget class="QPushButton" name="Down_btn">
      <property name="geometry">
       <rect>
@@ -855,36 +735,18 @@ color:rgb(255, 255, 255);</string>
       <string>Up</string>
      </property>
     </widget>
-    <widget class="QWidget" name="horizontalLayoutWidget_4">
+    <widget class="QWidget" name="horizontalLayoutWidget_8">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>40</y>
-       <width>131</width>
-       <height>36</height>
+       <y>10</y>
+       <width>251</width>
+       <height>31</height>
       </rect>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <layout class="QHBoxLayout" name="horizontalLayout_9">
       <item>
-       <widget class="QLabel" name="label_9">
-        <property name="font">
-         <font>
-          <family>에스코어 드림 6 Bold</family>
-          <pointsize>11</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>GaitType: </string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="gaittype_label">
+       <widget class="QLabel" name="label_12">
         <property name="font">
          <font>
           <family>에스코어 드림 6 Bold</family>
@@ -895,36 +757,6 @@ color:rgb(255, 255, 255);</string>
         </property>
         <property name="styleSheet">
          <string notr="true">color: rgb(0, 0, 255);</string>
-        </property>
-        <property name="text">
-         <string>0</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="horizontalLayoutWidget_3">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>10</y>
-       <width>131</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
-      <item>
-       <widget class="QLabel" name="label_2">
-        <property name="font">
-         <font>
-          <family>에스코어 드림 6 Bold</family>
-          <pointsize>11</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
         </property>
         <property name="text">
          <string>Mode :</string>
@@ -935,7 +767,59 @@ color:rgb(255, 255, 255);</string>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="mode_label">
+       <widget class="QComboBox" name="mode_comboBox">
+        <property name="font">
+         <font>
+          <family>에스코어 드림 6 Bold</family>
+          <pointsize>10</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>IDLE (0)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Force Stand (1)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Vel Walk (2)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Stand Down (5)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Stand Up (6)</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="horizontalLayoutWidget_9">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>40</y>
+       <width>271</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_10">
+      <item>
+       <widget class="QLabel" name="label_13">
         <property name="font">
          <font>
           <family>에스코어 드림 6 Bold</family>
@@ -948,11 +832,46 @@ color:rgb(255, 255, 255);</string>
          <string notr="true">color: rgb(0, 0, 255);</string>
         </property>
         <property name="text">
-         <string>0</string>
+         <string>GaitType :</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
         </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="gaittype_comboBox">
+        <property name="font">
+         <font>
+          <family>에스코어 드림 6 Bold</family>
+          <pointsize>10</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 255, 255);</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>IDLE (0)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Trot (1)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Climb Stair (2)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Trot Obstacle (3)</string>
+         </property>
+        </item>
        </widget>
       </item>
      </layout>
@@ -1025,7 +944,7 @@ color: rgb(255, 255, 255);</string>
      <rect>
       <x>260</x>
       <y>410</y>
-      <width>231</width>
+      <width>251</width>
       <height>171</height>
      </rect>
     </property>
@@ -1064,6 +983,158 @@ color:rgb(255, 255, 255)</string>
      <string>Camera ON</string>
     </property>
    </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget_11">
+    <property name="geometry">
+     <rect>
+      <x>530</x>
+      <y>410</y>
+      <width>421</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_12">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="font">
+          <font>
+           <family>에스코어 드림 6 Bold</family>
+           <pointsize>11</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Mode :</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="mode_label">
+         <property name="font">
+          <font>
+           <family>에스코어 드림 6 Bold</family>
+           <pointsize>11</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(0, 0, 255);</string>
+         </property>
+         <property name="text">
+          <string>0</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="Line" name="line">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <item>
+        <widget class="QLabel" name="label_9">
+         <property name="font">
+          <font>
+           <family>에스코어 드림 6 Bold</family>
+           <pointsize>11</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>GaitType: </string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="gaittype_label">
+         <property name="font">
+          <font>
+           <family>에스코어 드림 6 Bold</family>
+           <pointsize>11</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(0, 0, 255);</string>
+         </property>
+         <property name="text">
+          <string>0</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="Line" name="line_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_11">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="font">
+          <font>
+           <family>에스코어 드림 6 Bold</family>
+           <pointsize>11</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>배터리 :</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="SOC_label">
+         <property name="font">
+          <font>
+           <family>에스코어 드림 6 Bold</family>
+           <pointsize>11</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(0, 170, 0);</string>
+         </property>
+         <property name="text">
+          <string>100%</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
    <zorder>frame_2</zorder>
    <zorder>connect_btn</zorder>
    <zorder>frame</zorder>
@@ -1071,6 +1142,7 @@ color:rgb(255, 255, 255)</string>
    <zorder>camera_view</zorder>
    <zorder>highstate_textBrowser</zorder>
    <zorder>camera_on_btn</zorder>
+   <zorder>horizontalLayoutWidget_11</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actiontest">

@@ -28,60 +28,57 @@ class myunitree:
             self.hstate_bms_SOC = self.hstate.bms.SOC
             self.hstate_footforce = self.hstate.footForce
             self.hstate_mode =self.hstate.mode
-            # self.hstate_mode =self.hcmd.mode
             self.hstate_gaitType =self.hstate.gaitType
+
+            self.hcmd_mode = self.hcmd.mode
 
 
     def sendCmd(self):
         self.cmd_bytes = self.hcmd.buildCmd(debug=False)
         self.conn.send(self.cmd_bytes)
-        # print(self.hcmd.mode)
-
         self.cmdInit()
-
+        # print(self.hcmd.mode)
+        print(self.hcmd.gaitType)
+    #------ 뱡향키 입력 메소드 ---------------------------------
     def click_N(self,vel_0):
         self.cmdInit()
-        self.hcmd.mode = MotorModeHigh.VEL_WALK # mode 2
+        # self.hcmd.mode = MotorModeHigh.VEL_WALK # mode 2
         self.hcmd.velocity = [vel_0, 0]  # -1  ~ +1
-        print("walk 앞")
-
+        print(vel_0)
     def click_S(self,vel_0):
         self.cmdInit()
-        self.hcmd.mode = MotorModeHigh.VEL_WALK  # mode 2
+        # self.hcmd.mode = MotorModeHigh.VEL_WALK  # mode 2
         self.hcmd.velocity = [vel_0, 0]  # -1  ~ +1
-        print("walk 뒤")
-
     def click_W(self,vel_1):
         self.cmdInit()
-        self.hcmd.mode = MotorModeHigh.VEL_WALK  # mode 2
+        # self.hcmd.mode = MotorModeHigh.VEL_WALK  # mode 2
         self.hcmd.velocity = [0, vel_1]  # -1  ~ +1
-        print("walk 좌")
-
     def click_E(self,vel_1):
         self.cmdInit()
-        self.hcmd.mode = MotorModeHigh.VEL_WALK  # mode 2
+        # self.hcmd.mode = MotorModeHigh.VEL_WALK  # mode 2
         self.hcmd.velocity = [0, vel_1]  # -1  ~ +1
-        print("walk 우")
-
     def click_Stop(self):
         self.cmdInit()
-        self.hcmd.mode = MotorModeHigh.IDLE
+        # self.hcmd.mode = MotorModeHigh.IDLE
         self.hcmd.velocity = [0,0]  # -1  ~ +1
         self.hcmd.yawSpeed = 0
-        # self.hcmd.bodyHeight = 0
-        print("STOP")
-
     def click_L(self,yawspeed_value):
         self.cmdInit()
-        self.hcmd.mode = MotorModeHigh.VEL_WALK
+        # self.hcmd.mode = MotorModeHigh.VEL_WALK
         self.hcmd.yawSpeed = yawspeed_value
-        print("Click L")
     def click_R(self,yawspeed_value):
         self.cmdInit()
-        self.hcmd.mode = MotorModeHigh.VEL_WALK
+        # self.hcmd.mode = MotorModeHigh.VEL_WALK
         self.hcmd.yawSpeed = yawspeed_value
-        print("Click R")
-
+    def click_force_Stop(self):
+        self.cmdInit()
+        self.hcmd.mode = MotorModeHigh.IDLE
+        self.hcmd.gaitType = GaitType.IDLE
+        self.hcmd.velocity = [0,0]  # -1  ~ +1
+        self.hcmd.yawSpeed = 0
+        self.hcmd.euler = [0, 0, 0]
+        print("강제 STOP")
+    # -------------------------------------------------------
     def click_Up(self):
         self.cmdInit()
         self.hcmd.mode = MotorModeHigh.STAND_UP
@@ -94,7 +91,7 @@ class myunitree:
     def click_Euler(self,vel_row,vel_pitch,vel_yaw): #self,vel_row,vel_pitch,vel_yaw
 
         self.cmdInit()
-        self.hcmd.mode = MotorModeHigh.FORCE_STAND
+        # self.hcmd.mode = MotorModeHigh.FORCE_STAND
 
         # euler = [Roll, Pitch, Yaw]
         # Row: (+)왼쪽, (-)오른쪽
@@ -105,15 +102,37 @@ class myunitree:
 
     def click_Height(self,vel_bodyHeight):
         self.cmdInit()
-        self.hcmd.mode = MotorModeHigh.FORCE_STAND
+        # self.hcmd.mode = MotorModeHigh.FORCE_STAND
         # self.hcmd.bodyHeight = 0.1 # default: 0.28m
         self.hcmd.bodyHeight = vel_bodyHeight # default: 0.28m
 
-    def click_Trot(self):
+    # ------ Mode ComboBox 입력 메소드 --------------------
+    def click_ModeCombo_IDLE(self):
         self.cmdInit()
-        self.hcmd.mode = MotorModeHigh.VEL_WALK
-        # self.hcmd.gaitType = GaitType.TROT
-        self.hcmd.gaitType = GaitType.CLIMB_STAIR
-        # # self.hcmd.velocity = [0.1, 0]  # -1  ~ +1
-        # # self.hcmd.footRaiseHeight = 0.01
+        self.hcmd.mode = MotorModeHigh.IDLE # mode  0
+    def click_ModeCombo_Force_Stand(self):
+        self.cmdInit()
+        self.hcmd.mode = MotorModeHigh.FORCE_STAND # mode  1
+    def click_ModeCombo_VEL_WALK(self):
+        self.cmdInit()
+        self.hcmd.mode = MotorModeHigh.VEL_WALK # mode 2
+    def click_ModeCombo_STAND_DOWN(self):
+        self.cmdInit()
+        self.hcmd.mode = MotorModeHigh.STAND_DOWN # mode 5
+    def click_ModeCombo_STAND_UP(self):
+        self.cmdInit()
+        self.hcmd.mode = MotorModeHigh.STAND_UP # mode 6
 
+    #------ GaitType ComboBox 입력 메소드 --------------------
+    def click_GaitTypeCombo_IDLE(self):
+        self.cmdInit()
+        self.hcmd.gaitType = GaitType.IDLE  # GaitType 0
+    def click_GaitTypeCombo_Trot(self):
+        self.cmdInit()
+        self.hcmd.gaitType = GaitType.TROT  # GaitType 1
+    def click_GaitTypeCombo_CLIMB_STAIR(self):
+        self.cmdInit()
+        self.hcmd.gaitType = GaitType.CLIMB_STAIR  # GaitType 2
+    def click_GaitTypeCombo_TROT_OBSTACLE(self):
+        self.cmdInit()
+        self.hcmd.gaitType = GaitType.TROT_OBSTACLE  # GaitType 3
