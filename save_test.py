@@ -15,7 +15,7 @@ class Tread1(QThread):
     def run(self):
         try:
             while True:
-                time.sleep(0.2)
+                time.sleep(0.01)
                 self.parent.sendCmd()
         except Exception as e:
             print("Tread1에서 예외 발생:")
@@ -92,6 +92,7 @@ class MyWindow(QMainWindow):
         self.SOC_label = self.findChild(QLabel, "SOC_label")
         self.Mode_label = self.findChild(QLabel, "mode_label")
         self.GaitType_label = self.findChild(QLabel, "gaittype_label")
+        self.BodyHeight_label = self.findChild(QLabel, "bodyheight_label")
         #------ ComboBox ---------------------------------------------------
         self.Mode_ComboBox = self.findChild(QComboBox,"mode_comboBox")
         self.Mode_ComboBox.currentIndexChanged.connect(self.mode_combobox_changed)
@@ -107,15 +108,16 @@ class MyWindow(QMainWindow):
     def sendCmd(self):
         self.isungb1.sendCmd()
 
-        self.highstate_textBrowser.append(self.isungb1.highstate_info)
+        # self.highstate_textBrowser.append(self.isungb1.highstate_info)
 
         self.data_SOC = self.isungb1.hstate_bms_SOC
         self.data_mode = self.isungb1.hstate_mode
         self.data_gaitType =self.isungb1.hstate_gaitType
-        self.update_label()
 
         self.plot_data_bodyHeight = self.isungb1.hstate_bodyHeight
         self.plot_data_footforce = self.isungb1.hstate_footforce
+
+        self.update_label()
 
 #------데이터 입력 이벤트------------
     def vel_0_value_changed(self, value):
@@ -140,23 +142,29 @@ class MyWindow(QMainWindow):
 #------버튼 클릭 이벤트--------------
     def click_N(self):
         self.is_N_btn_pressed = True
+        self.N_btn.setStyleSheet("background-color: rgb(172, 206, 255);")
         self.isungb1.click_N(self.vel_0_N)
     def click_S(self):
         self.is_S_btn_pressed = True
+        self.S_btn.setStyleSheet("background-color: rgb(172, 206, 255);")
         self.isungb1.click_S(self.vel_0_S)
     def click_W(self):
         self.is_W_btn_pressed = True
+        self.W_btn.setStyleSheet("background-color: rgb(172, 206, 255);")
         self.isungb1.click_W(self.vel_1_W)
     def click_E(self):
         self.is_E_btn_pressed = True
+        self.E_btn.setStyleSheet("background-color: rgb(172, 206, 255);")
         self.isungb1.click_E(self.vel_1_E)
     def click_Stop(self):
         self.isungb1.click_force_Stop()
     def click_L(self):
         self.is_L_btn_pressed = True
+        self.L_btn.setStyleSheet("background-color: rgb(206, 206, 206);")
         self.isungb1.click_L(self.yawspeed_value_L)
     def click_R(self):
         self.is_R_btn_pressed = True
+        self.R_btn.setStyleSheet("background-color: rgb(206, 206, 206);")
         self.isungb1.click_R(self.yawspeed_value_R)
     def click_Up(self):
         self.isungb1.click_Up()
@@ -169,21 +177,29 @@ class MyWindow(QMainWindow):
 
     def release_N(self):
         self.is_N_btn_pressed = False
+        self.N_btn.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.isungb1.click_Stop()
     def release_S(self):
         self.is_S_btn_pressed = False
+        self.S_btn.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.isungb1.click_Stop()
     def release_W(self):
         self.is_W_btn_pressed = False
+        self.W_btn.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.isungb1.click_Stop()
     def release_E(self):
         self.is_E_btn_pressed = False
+        self.E_btn.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.isungb1.click_Stop()
     def release_L(self):
         self.is_L_btn_pressed = False
+        self.L_btn.setStyleSheet("background:rgb(112, 112, 112);"
+                                 "color:rgb(255, 255, 255);")
         self.isungb1.click_Stop()
     def release_R(self):
         self.is_R_btn_pressed = False
+        self.R_btn.setStyleSheet("background:rgb(112, 112, 112);"
+                                 "color:rgb(255, 255, 255);")
         self.isungb1.click_Stop()
 
 #------ 콤보 박스 클릭 이벤트 --------------
@@ -193,19 +209,15 @@ class MyWindow(QMainWindow):
 
         if selected_item == "IDLE (0)":
             self.isungb1.click_ModeCombo_IDLE()
-            print("click IDLE")
         elif selected_item == "Force Stand (1)":
             self.isungb1.click_ModeCombo_Force_Stand()
-            print("click Force stand")
-        elif selected_item == "Vel Walk (2)":
-            self.isungb1.click_ModeCombo_VEL_WALK()
-            print("click Vel Walk")
+        # elif selected_item == "Vel Walk (2)":
+            # self.isungb1.click_ModeCombo_VEL_WALK()
         elif selected_item == "Stand Down (5)":
             self.isungb1.click_ModeCombo_STAND_DOWN()
-            print("click Stand Down")
         elif selected_item == "Stand Up (6)":
             self.isungb1.click_ModeCombo_STAND_UP()
-            print("click Stand Up")
+
 
     def gaittype_comboBox_changed(self, index):
         selected_item = self.GaitType_ComboBox.currentText()
@@ -213,16 +225,12 @@ class MyWindow(QMainWindow):
 
         if selected_item == "IDLE (0)":
             self.isungb1.click_GaitTypeCombo_IDLE()
-            print("click IDLE")
         elif selected_item == "Trot (1)":
             self.isungb1.click_GaitTypeCombo_Trot()
-            print("click Trot")
         elif selected_item == "Climb Stair (2)":
             self.isungb1.click_GaitTypeCombo_CLIMB_STAIR()
-            print("click Climb Stair")
         elif selected_item == "Trot Obstacle (3)":
             self.isungb1.click_GaitTypeCombo_TROT_OBSTACLE()
-            print("click Trot Obstacle")
 
 #---------------------------------------------------------------------
     def udp_connect(self):
@@ -238,6 +246,7 @@ class MyWindow(QMainWindow):
         self.SOC_label.setText("{:.1f}".format(self.data_SOC))
         self.Mode_label.setText("{:.1f}".format(self.data_mode))
         self.GaitType_label.setText("{:.1f}".format(self.data_gaitType))
+        self.BodyHeight_label.setText("{:.1f}".format(self.plot_data_bodyHeight))
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
