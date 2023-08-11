@@ -695,9 +695,9 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="camera_view">
     <property name="geometry">
      <rect>
-      <x>260</x>
+      <x>240</x>
       <y>50</y>
-      <width>691</width>
+      <width>711</width>
       <height>351</height>
      </rect>
     </property>
@@ -726,10 +726,10 @@ color: rgb(255, 255, 255);</string>
    <widget class="QTextBrowser" name="highstate_textBrowser">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>530</y>
-      <width>221</width>
-      <height>51</height>
+      <x>240</x>
+      <y>410</y>
+      <width>281</width>
+      <height>171</height>
      </rect>
     </property>
     <property name="font">
@@ -1154,60 +1154,6 @@ color: rgb(255, 255, 255);</string>
      </layout>
     </widget>
    </widget>
-   <widget class="QWidget" name="horizontalLayoutWidget_20">
-    <property name="geometry">
-     <rect>
-      <x>800</x>
-      <y>530</y>
-      <width>160</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_23">
-     <item>
-      <widget class="QLabel" name="label_26">
-       <property name="font">
-        <font>
-         <family>에스코어 드림 6 Bold</family>
-         <pointsize>11</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(0, 0, 0);</string>
-       </property>
-       <property name="text">
-        <string>BodyHeight :</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="bodyheight_label">
-       <property name="font">
-        <font>
-         <family>에스코어 드림 6 Bold</family>
-         <pointsize>11</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(109, 0, 163);</string>
-       </property>
-       <property name="text">
-        <string>0</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
    <zorder>frame_2</zorder>
    <zorder>connect_btn</zorder>
    <zorder>frame</zorder>
@@ -1217,7 +1163,6 @@ color: rgb(255, 255, 255);</string>
    <zorder>camera_on_btn</zorder>
    <zorder>horizontalLayoutWidget_11</zorder>
    <zorder>frame_3</zorder>
-   <zorder>horizontalLayoutWidget_20</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actiontest">

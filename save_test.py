@@ -6,6 +6,9 @@ from PyQt5 import uic
 from PyQt5.QtCore import *
 from myunitree_value_test import myunitree
 from myDialog import myDialog
+from PositionDialog import PositionDialog
+from View3DDialog import View3DDialog
+
 
 class Tread1(QThread):
     def __init__(self,parent):
@@ -36,12 +39,20 @@ class MyWindow(QMainWindow):
         self.vel_euler_0 = 0
         self.vel_euler_1 = 0
         self.vel_euler_2 = 0
-        #----------------------------------------------------------
+        #------ Dialog ----------------------------------------------------
         self.actionGraph = QAction("Open Graph", self)
+        self.actionPositionGraph = QAction("Position View", self)
+        self.view_robot_3D = QAction("3D View",self)
         self.actionGraph.triggered.connect(self.open_graph_window)
+        self.actionPositionGraph.triggered.connect(self.open_position_window)
+        self.view_robot_3D.triggered.connect(self.open_view_robot_3D)
+
+
 
         self.fileMenu = self.menuBar().addMenu("Graph")
         self.fileMenu.addAction(self.actionGraph)
+        self.fileMenu.addAction(self.actionPositionGraph)
+        self.fileMenu.addAction(self.view_robot_3D)
 
         # ------ 버튼 -----------------------------------------------------
         self.connect_btn.clicked.connect(self.udp_connect) # 통신 연결 버튼
@@ -92,7 +103,6 @@ class MyWindow(QMainWindow):
         self.SOC_label = self.findChild(QLabel, "SOC_label")
         self.Mode_label = self.findChild(QLabel, "mode_label")
         self.GaitType_label = self.findChild(QLabel, "gaittype_label")
-        self.BodyHeight_label = self.findChild(QLabel, "bodyheight_label")
         #------ ComboBox ---------------------------------------------------
         self.Mode_ComboBox = self.findChild(QComboBox,"mode_comboBox")
         self.Mode_ComboBox.currentIndexChanged.connect(self.mode_combobox_changed)
@@ -104,11 +114,17 @@ class MyWindow(QMainWindow):
     def open_graph_window(self):
         self.graph_window = myDialog(self)
         self.graph_window.show()
+    def open_position_window(self):
+        self.graph_window = PositionDialog(self)
+        self.graph_window.show()
+    def open_view_robot_3D(self):
+        self.view_window = View3DDialog(self)
+        self.view_window.show()
 
     def sendCmd(self):
         self.isungb1.sendCmd()
 
-        # self.highstate_textBrowser.append(self.isungb1.highstate_info)
+        self.highstate_textBrowser.append(self.isungb1.highstate_info)
 
         self.data_SOC = self.isungb1.hstate_bms_SOC
         self.data_mode = self.isungb1.hstate_mode
@@ -116,6 +132,10 @@ class MyWindow(QMainWindow):
 
         self.plot_data_bodyHeight = self.isungb1.hstate_bodyHeight
         self.plot_data_footforce = self.isungb1.hstate_footforce
+        self.plot_data_position = self.isungb1.hstate_position
+
+        self.view_data_rpy = self.isungb1.hstate_rpy
+        self.view_data_motorQ = self.isungb1.hstate_motorQ
 
         self.update_label()
 
@@ -218,7 +238,6 @@ class MyWindow(QMainWindow):
         elif selected_item == "Stand Up (6)":
             self.isungb1.click_ModeCombo_STAND_UP()
 
-
     def gaittype_comboBox_changed(self, index):
         selected_item = self.GaitType_ComboBox.currentText()
         print(f"Selected GaitType: {selected_item}")
@@ -231,7 +250,6 @@ class MyWindow(QMainWindow):
             self.isungb1.click_GaitTypeCombo_CLIMB_STAIR()
         elif selected_item == "Trot Obstacle (3)":
             self.isungb1.click_GaitTypeCombo_TROT_OBSTACLE()
-
 #---------------------------------------------------------------------
     def udp_connect(self):
         try:
@@ -246,8 +264,6 @@ class MyWindow(QMainWindow):
         self.SOC_label.setText("{:.1f}".format(self.data_SOC))
         self.Mode_label.setText("{:.1f}".format(self.data_mode))
         self.GaitType_label.setText("{:.1f}".format(self.data_gaitType))
-        self.BodyHeight_label.setText("{:.1f}".format(self.plot_data_bodyHeight))
-
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = MyWindow()

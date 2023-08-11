@@ -24,21 +24,25 @@ class myunitree:
 
             # self.highstate_info = f"bodyHeight:\t\t{self.hstate.bodyHeight}\n"
 
-            # self.highstate_info = f"Mode:\t\t{self.hstate.mode}\n" \
-            #                       f"GaitType:\t\t{self.hstate.gaitType}\n"
+            self.highstate_info = f"Position:\t\t{self.hstate.position}\n"
 
             self.hstate_bodyHeight = self.hstate.bodyHeight
             self.hstate_bms_SOC = self.hstate.bms.SOC
             self.hstate_footforce = self.hstate.footForce
             self.hstate_mode =self.hstate.mode
             self.hstate_gaitType =self.hstate.gaitType
+            self.hstate_position = self.hstate.position
 
+            self.hstate_rpy = [self.hstate.imu.rpy[0],self.hstate.imu.rpy[1],self.hstate.imu.rpy[2]]
+            self.hstate_motorQ = []
+            for i in range(20):
+                self.hstate_motorQ.append(self.hstate.motorstate[i].q)
 
     def sendCmd(self):
         self.cmd_bytes = self.hcmd.buildCmd(debug=False)
         self.conn.send(self.cmd_bytes)
         self.cmdInit()
-        print(self.hcmd.mode)
+        # print(self.hcmd.mode)
         # print(self.hcmd.gaitType)
     #------ 뱡향키 입력 메소드 ---------------------------------
     def click_N(self,vel_0):
