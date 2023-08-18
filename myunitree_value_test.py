@@ -24,7 +24,7 @@ class myunitree:
 
             # self.highstate_info = f"bodyHeight:\t\t{self.hstate.bodyHeight}\n"
 
-            self.highstate_info = f"Position:\t\t{self.hstate.position}\n"
+            self.highstate_info = f"{self.hstate.imu.quaternion}\n"
 
             self.hstate_bodyHeight = self.hstate.bodyHeight
             self.hstate_bms_SOC = self.hstate.bms.SOC
@@ -34,6 +34,7 @@ class myunitree:
             self.hstate_position = self.hstate.position
 
             self.hstate_rpy = [self.hstate.imu.rpy[0],self.hstate.imu.rpy[1],self.hstate.imu.rpy[2]]
+            self.hstate_quaternion =[self.hstate.imu.quaternion[0],self.hstate.imu.quaternion[1],self.hstate.imu.quaternion[2],self.hstate.imu.quaternion[3]]
             self.hstate_motorQ = []
             for i in range(20):
                 self.hstate_motorQ.append(self.hstate.motorstate[i].q)
@@ -49,7 +50,6 @@ class myunitree:
         self.cmdInit()
         self.hcmd.mode = MotorModeHigh.VEL_WALK # mode 2
         self.hcmd.velocity = [vel_0, 0]  # -1  ~ +1
-        print(vel_0)
     def click_S(self,vel_0):
         self.cmdInit()
         self.hcmd.mode = MotorModeHigh.VEL_WALK  # mode 2

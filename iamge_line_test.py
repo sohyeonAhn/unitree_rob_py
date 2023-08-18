@@ -3,6 +3,7 @@ import time
 import cv2
 import traceback
 import numpy as np
+import math
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
 from PyQt5.QtCore import *
@@ -69,6 +70,8 @@ class MyWindow(QMainWindow):
         self.actionPositionGraph.triggered.connect(self.open_position_window)
         self.view_robot_3D.triggered.connect(self.open_view_robot_3D)
 
+
+
         self.fileMenu = self.menuBar().addMenu("Graph")
         self.fileMenu.addAction(self.actionGraph)
         self.fileMenu.addAction(self.actionPositionGraph)
@@ -104,8 +107,6 @@ class MyWindow(QMainWindow):
         self.euler_btn.pressed.connect(self.click_Euler)
         self.height_btn.pressed.connect(self.click_Height)
 
-        self.position_btn.pressed.connect(self.click_Position)
-
         self.is_N_btn_pressed = False
         self.is_S_btn_pressed = False
         self.is_W_btn_pressed = False
@@ -122,10 +123,6 @@ class MyWindow(QMainWindow):
         self.input_euler_1.valueChanged.connect(self.vel_euler_value_1_changed)
         self.input_euler_2.valueChanged.connect(self.vel_euler_value_2_changed)
         self.input_height.valueChanged.connect(self.bodyHeight_value_changed)
-
-        self.input_position_0.valueChanged.connect(self.vel_position_value_0_changed)
-        self.input_position_1.valueChanged.connect(self.vel_position_value_1_changed)
-
         # ------ Label -----------------------------------------------------
         self.SOC_label = self.findChild(QLabel, "SOC_label")
         self.Mode_label = self.findChild(QLabel, "mode_label")
@@ -163,7 +160,6 @@ class MyWindow(QMainWindow):
 
         self.view_data_rpy = self.isungb1.hstate_rpy
         self.view_data_motorQ = self.isungb1.hstate_motorQ
-        self.view_data_quaternion =self.isungb1.hstate_quaternion
 
         self.update_label()
 
@@ -186,11 +182,6 @@ class MyWindow(QMainWindow):
         self.vel_euler_2 = value
     def bodyHeight_value_changed(self, value):
         self.vel_bodyheight = value
-
-    def vel_position_value_0_changed(self,value):
-        self.vel_position_0 = value
-    def vel_position_value_1_changed(self,value):
-        self.vel_position_1 = value
 
 #------버튼 클릭 이벤트--------------
     def click_N(self):
@@ -227,18 +218,6 @@ class MyWindow(QMainWindow):
         self.isungb1.click_Euler(self.vel_euler_0,self.vel_euler_1,self.vel_euler_2)
     def click_Height(self):
         self.isungb1.click_Height(self.vel_bodyheight)
-
-    def click_Position(self):
-        if self.vel_position_0 > self.plot_data_position[0]:
-            print("앞으로 갑니다")
-            self.isungb1.click_N(self.vel_0_N)
-        elif self.vel_position_0 < self.plot_data_position[0]:
-            print("뒤로 갑니다")
-            self.isungb1.click_S(self.vel_0_S)
-        elif abs(self.vel_position_0 - self.plot_data_position[0]) < 0.01:
-            self.isungb1.click_force_Stop()
-        else:
-            self.isungb1.click_force_Stop()
 
     def release_N(self):
         self.is_N_btn_pressed = False
@@ -310,35 +289,29 @@ class MyWindow(QMainWindow):
         self.Mode_label.setText("{:.1f}".format(self.data_mode))
         self.GaitType_label.setText("{:.1f}".format(self.data_gaitType))
 
-#------ 카메라 관련 메소드 ------------------------------------
     def camera_on(self):
 
         self.camera_thread = CameraThread(self)
         self.camera_thread.update_image.connect(self.update_camera_view)
         self.camera_thread.start()
 
-    # 이미지에서 선을 감지하고 그려주는 함수
     def detect_lines(self, image):
-        gray_image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY) # 입력 이미지를 흑백 이미지로 변환
-        # 에지 검출을 통해 엣지 이미지 생성
+        gray_image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         edges = cv2.Canny(gray_image, threshold1=50, threshold2=150)
-        # 허프 변환을 사용하여 선 감지
         lines = cv2.HoughLinesP(edges, 1, np.pi / 180, threshold=50, minLineLength=50, maxLineGap=5)
 
         for line in lines:
             x1, y1, x2, y2 = line[0]
-            cv2.line(image, (x1, y1), (x2, y2), (0, 255, 0), 2) # 이미지에 감지된 선을 그림
+            cv2.line(image, (x1, y1), (x2, y2), (0, 255, 0), 2)
 
         return image
 
-    # 카메라 뷰를 업데이트하는 슬롯 함수
     @pyqtSlot(QImage)
     def update_camera_view(self, image):
-        cv2_image = self.qimage_to_cv(image)  # QImage를 OpenCV 이미지로 변환
-        image_with_lines = self.detect_lines(cv2_image) # 선 감지 함수 적용한 이미지 생성
-        self.camera_view.setPixmap(QPixmap.fromImage(self.cv_to_qimage(image_with_lines)))  # 카메라 뷰 업데이트
+        cv2_image = self.qimage_to_cv(image)  # Convert QImage to cv2 image
+        image_with_lines = self.detect_lines(cv2_image)
+        self.camera_view.setPixmap(QPixmap.fromImage(self.cv_to_qimage(image_with_lines)))  # Update the camera view
 
-    # QImage를 OpenCV 이미지로 변환하는 함수
     def qimage_to_cv(self, qimage):
         qimage = qimage.convertToFormat(QImage.Format_RGB888)
         width = qimage.width()
@@ -347,7 +320,6 @@ class MyWindow(QMainWindow):
         ptr.setsize(qimage.byteCount())
         return np.array(ptr).reshape(height, width, 3)
 
-    # OpenCV 이미지를 QImage로 변환하는 함수
     def cv_to_qimage(self, cv_image):
         height, width, channel = cv_image.shape
         bytes_per_line = 3 * width
