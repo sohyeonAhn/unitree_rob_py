@@ -61,10 +61,14 @@ class MyWindow(QMainWindow):
         self.vel_euler_0 = 0
         self.vel_euler_1 = 0
         self.vel_euler_2 = 0
+        self.move_vel_0 = 0
+        self.move_vel_1 = 0
+        self.AutoMode_flag = False
+
         #------ Dialog ----------------------------------------------------
         self.actionGraph = QAction("Open Graph", self)
         self.actionPositionGraph = QAction("Position View", self)
-        self.view_robot_3D = QAction("3D View",self)
+        self.view_robot_3D = QAction("3D View", self)
         self.actionGraph.triggered.connect(self.open_graph_window)
         self.actionPositionGraph.triggered.connect(self.open_position_window)
         self.view_robot_3D.triggered.connect(self.open_view_robot_3D)
@@ -80,13 +84,10 @@ class MyWindow(QMainWindow):
         # 컨트롤러 버튼
         self.N_btn.pressed.connect(self.click_N)
         self.N_btn.released.connect(self.release_N)
-
         self.S_btn.pressed.connect(self.click_S)
         self.S_btn.released.connect(self.release_S)
-
         self.W_btn.pressed.connect(self.click_W)
         self.W_btn.released.connect(self.release_W)
-
         self.E_btn.pressed.connect(self.click_E)
         self.E_btn.released.connect(self.release_E)
 
@@ -94,7 +95,6 @@ class MyWindow(QMainWindow):
 
         self.L_btn.pressed.connect(self.click_L)
         self.L_btn.released.connect(self.release_L)
-
         self.R_btn.pressed.connect(self.click_R)
         self.R_btn.released.connect(self.release_R)
 
@@ -104,7 +104,8 @@ class MyWindow(QMainWindow):
         self.euler_btn.pressed.connect(self.click_Euler)
         self.height_btn.pressed.connect(self.click_Height)
 
-        self.position_btn.pressed.connect(self.click_Position)
+        self.auto_start_position_btn.pressed.connect(self.click_auto_start_Position)
+        self.auto_end_position_btn.pressed.connect(self.click_auto_end_Position)
 
         self.is_N_btn_pressed = False
         self.is_S_btn_pressed = False
@@ -112,7 +113,6 @@ class MyWindow(QMainWindow):
         self.is_E_btn_pressed = False
         self.is_L_btn_pressed = False
         self.is_R_btn_pressed = False
-
         # ------ 값 입력 ----------------------------------------------------
         self.input_vel_0.valueChanged.connect(self.vel_0_value_changed)
         self.input_vel_1.valueChanged.connect(self.vel_1_value_changed)
@@ -130,6 +130,9 @@ class MyWindow(QMainWindow):
         self.SOC_label = self.findChild(QLabel, "SOC_label")
         self.Mode_label = self.findChild(QLabel, "mode_label")
         self.GaitType_label = self.findChild(QLabel, "gaittype_label")
+        self.State_Position_0_label = self.findChild(QLabel, "state_position_0_label")
+        self.State_Position_1_label = self.findChild(QLabel, "state_position_1_label")
+        self.Yawspeed_value_label = self.findChild(QLabel, "yawspeed_value_label")
         #------ ComboBox ---------------------------------------------------
         self.Mode_ComboBox = self.findChild(QComboBox,"mode_comboBox")
         self.Mode_ComboBox.currentIndexChanged.connect(self.mode_combobox_changed)
@@ -137,7 +140,7 @@ class MyWindow(QMainWindow):
         self.GaitType_ComboBox = self.findChild(QComboBox, "gaittype_comboBox")
         self.GaitType_ComboBox.currentIndexChanged.connect(self.gaittype_comboBox_changed)
 
-
+#------ Dialog Window 띄우기 ----------------------
     def open_graph_window(self):
         self.graph_window = myDialog(self)
         self.graph_window.show()
@@ -147,7 +150,7 @@ class MyWindow(QMainWindow):
     def open_view_robot_3D(self):
         self.view_window = View3DDialog(self)
         self.view_window.show()
-
+#------ SendCmd -------------------------------------
     def sendCmd(self):
         self.isungb1.sendCmd()
 
@@ -156,6 +159,7 @@ class MyWindow(QMainWindow):
         self.data_SOC = self.isungb1.hstate_bms_SOC
         self.data_mode = self.isungb1.hstate_mode
         self.data_gaitType =self.isungb1.hstate_gaitType
+        self.data_yawspeed = self.isungb1.hstate_yawspeed
 
         self.plot_data_bodyHeight = self.isungb1.hstate_bodyHeight
         self.plot_data_footforce = self.isungb1.hstate_footforce
@@ -166,6 +170,10 @@ class MyWindow(QMainWindow):
         self.view_data_quaternion =self.isungb1.hstate_quaternion
 
         self.update_label()
+
+        # Auto 모드
+        if self.AutoMode_flag == True:
+            self.Auto_move_vel()
 
 #------데이터 입력 이벤트------------
     def vel_0_value_changed(self, value):
@@ -228,17 +236,11 @@ class MyWindow(QMainWindow):
     def click_Height(self):
         self.isungb1.click_Height(self.vel_bodyheight)
 
-    def click_Position(self):
-        if self.vel_position_0 > self.plot_data_position[0]:
-            print("앞으로 갑니다")
-            self.isungb1.click_N(self.vel_0_N)
-        elif self.vel_position_0 < self.plot_data_position[0]:
-            print("뒤로 갑니다")
-            self.isungb1.click_S(self.vel_0_S)
-        elif abs(self.vel_position_0 - self.plot_data_position[0]) < 0.01:
-            self.isungb1.click_force_Stop()
-        else:
-            self.isungb1.click_force_Stop()
+    def click_auto_start_Position(self):
+        self.AutoMode_flag = True
+    def click_auto_end_Position(self):
+        self.AutoMode_flag = False
+        self.isungb1.click_Stop()
 
     def release_N(self):
         self.is_N_btn_pressed = False
@@ -309,6 +311,9 @@ class MyWindow(QMainWindow):
         self.SOC_label.setText("{:.1f}".format(self.data_SOC))
         self.Mode_label.setText("{:.1f}".format(self.data_mode))
         self.GaitType_label.setText("{:.1f}".format(self.data_gaitType))
+        self.State_Position_0_label.setText("{:.1f}".format(self.plot_data_position[0]))
+        self.State_Position_1_label.setText("{:.1f}".format(self.plot_data_position[1]))
+        self.Yawspeed_value_label.setText("{:.01f}".format(self.data_yawspeed))
 
 #------ 카메라 관련 메소드 ------------------------------------
     def camera_on(self):
@@ -353,6 +358,61 @@ class MyWindow(QMainWindow):
         bytes_per_line = 3 * width
         qimage = QImage(cv_image.data, width, height, bytes_per_line, QImage.Format_RGB888)
         return qimage
+
+#------ Auto Position 메서드---------------------
+    def Auto_move_vel(self):
+        # plot_data_position: 현재 좌표 [y,x,높이]
+        # vel_position_0: 지정한 y좌표
+        # vel_position_1: 지정한 x좌표
+        # y좌표 방향 확인
+        if self.vel_position_0 > self.plot_data_position[0]:
+            print(f"현재 위치1-1 :({self.plot_data_position[0]}, {self.plot_data_position[1]})")
+            # y좌표 좌표 격차 확인
+            if abs(self.vel_position_0 - self.plot_data_position[0]) > 0.1:
+                print("1-1 격차가 0.1 초과")
+                self.move_vel_0 = self.vel_0_N
+            elif abs(self.vel_position_0 - self.plot_data_position[0]) < 0.1:
+                print("1-1 격차가 0.1 미만")
+                self.move_vel_0 = 0
+        elif self.vel_position_0 < self.plot_data_position[0]:
+            print(f"현재 위치1-2 :({self.plot_data_position[0]}, {self.plot_data_position[1]})")
+            # y좌표 좌표 격차 확인
+            if abs(self.vel_position_0 - self.plot_data_position[0]) > 0.1:
+                print("1-2 격차가 0.1 초과")
+                self.move_vel_0 = self.vel_0_S
+            elif abs(self.vel_position_0 - self.plot_data_position[0]) < 0.1:
+                print("1-2 격차가 0.1 미만")
+                self.move_vel_0 = 0
+
+        # x좌표 방향 확인
+        # left(+)/right(-)
+        if self.vel_position_1 > self.plot_data_position[1]:
+            print(f"현재 위치2-1 :({self.plot_data_position[0]}, {self.plot_data_position[1]})")
+            # x좌표 좌표 격차 확인
+            if abs(self.vel_position_1 - self.plot_data_position[1]) > 0.1:
+                print("2-1 격차가 0.1 초과")
+                self.move_vel_1 = self.vel_1_W
+            elif abs(self.vel_position_1 - self.plot_data_position[1]) <= 0.1:
+                print("2-1 격차가 0.1 미만")
+                self.move_vel_1 = 0
+        elif self.vel_position_1 < self.plot_data_position[1]:
+            print(f"현재 위치2-2 :({self.plot_data_position[0]}, {self.plot_data_position[1]})")
+            # x좌표 좌표 격차 확인
+            if abs(self.vel_position_1 - self.plot_data_position[1]) > 0.1:
+                print("2-2 격차가 0.1 초과")
+                self.move_vel_1 = self.vel_1_E
+            elif abs(self.vel_position_1 - self.plot_data_position[1]) < 0.1:
+                print("2-2 격차가 0.1 미만")
+                self.move_vel_1 = 0
+
+        # 좌표 지정 -> 이동
+        self.isungb1.click_mult(self.move_vel_0, self.move_vel_1)
+
+        # 좌표이동 완료
+        if abs(self.vel_position_1 - self.plot_data_position[1]) < 0.1 and abs(self.vel_position_0 - self.plot_data_position[0]) < 0.1:
+            print("좌표 지정 완료")
+            self.click_auto_end_Position()
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

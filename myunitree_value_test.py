@@ -24,7 +24,7 @@ class myunitree:
 
             # self.highstate_info = f"bodyHeight:\t\t{self.hstate.bodyHeight}\n"
 
-            self.highstate_info = f"{self.hstate.imu.quaternion}\n"
+            self.highstate_info = f"{self.hstate.position}\n"
 
             self.hstate_bodyHeight = self.hstate.bodyHeight
             self.hstate_bms_SOC = self.hstate.bms.SOC
@@ -32,6 +32,7 @@ class myunitree:
             self.hstate_mode =self.hstate.mode
             self.hstate_gaitType =self.hstate.gaitType
             self.hstate_position = self.hstate.position
+            self.hstate_yawspeed = self.hstate.yawSpeed
 
             self.hstate_rpy = [self.hstate.imu.rpy[0],self.hstate.imu.rpy[1],self.hstate.imu.rpy[2]]
             self.hstate_quaternion =[self.hstate.imu.quaternion[0],self.hstate.imu.quaternion[1],self.hstate.imu.quaternion[2],self.hstate.imu.quaternion[3]]
@@ -47,49 +48,54 @@ class myunitree:
         # print(self.hcmd.gaitType)
     #------ 뱡향키 입력 메소드 ---------------------------------
     def click_N(self,vel_0):
-        self.cmdInit()
+        # self.cmdInit()
         self.hcmd.mode = MotorModeHigh.VEL_WALK # mode 2
         self.hcmd.velocity = [vel_0, 0]  # -1  ~ +1
     def click_S(self,vel_0):
-        self.cmdInit()
+        # self.cmdInit()
         self.hcmd.mode = MotorModeHigh.VEL_WALK  # mode 2
         self.hcmd.velocity = [vel_0, 0]  # -1  ~ +1
     def click_W(self,vel_1):
-        self.cmdInit()
+        # self.cmdInit()
         self.hcmd.mode = MotorModeHigh.VEL_WALK  # mode 2
         self.hcmd.velocity = [0, vel_1]  # -1  ~ +1
     def click_E(self,vel_1):
-        self.cmdInit()
+        # self.cmdInit()
         self.hcmd.mode = MotorModeHigh.VEL_WALK  # mode 2
         self.hcmd.velocity = [0, vel_1]  # -1  ~ +1
     def click_Stop(self):
-        self.cmdInit()
+        # self.cmdInit()
         self.hcmd.mode = MotorModeHigh.FORCE_STAND
         self.hcmd.velocity = [0,0]  # -1  ~ +1
         self.hcmd.yawSpeed = 0
     def click_L(self,yawspeed_value):
-        self.cmdInit()
+        # self.cmdInit()
         self.hcmd.mode = MotorModeHigh.VEL_WALK
         self.hcmd.yawSpeed = yawspeed_value
     def click_R(self,yawspeed_value):
-        self.cmdInit()
+        # self.cmdInit()
         self.hcmd.mode = MotorModeHigh.VEL_WALK
         self.hcmd.yawSpeed = yawspeed_value
     def click_force_Stop(self):
-        self.cmdInit()
+        # self.cmdInit()
         self.hcmd.mode = MotorModeHigh.IDLE
         self.hcmd.gaitType = GaitType.IDLE
         self.hcmd.velocity = [0,0]  # -1  ~ +1
         self.hcmd.yawSpeed = 0
         self.hcmd.euler = [0, 0, 0]
         print("강제 STOP")
+
+    def click_mult(self,vel_0,vel_1):
+        self.cmdInit()
+        self.hcmd.mode = MotorModeHigh.VEL_WALK
+        self.hcmd.velocity = [vel_0,vel_1]
     # -------------------------------------------------------
     def click_Up(self):
-        self.cmdInit()
+        # self.cmdInit()
         self.hcmd.mode = MotorModeHigh.STAND_UP
         print("Click Up")
     def click_Down(self):
-        self.cmdInit()
+        # self.cmdInit()
         self.hcmd.mode = MotorModeHigh.STAND_DOWN
         print("Click Down")
 

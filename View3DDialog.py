@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import *
 from PyQt5 import uic
 from OpenGL.GL import *
 from OpenGL.GLU import *
-from robot3dmodel_3 import robot3d
+from robot3dmodel_4 import robot3d
 
 class View3DDialog(QDialog):
     def __init__(self,parent):
